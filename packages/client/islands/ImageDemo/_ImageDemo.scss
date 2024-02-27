@@ -1,0 +1,104 @@
+@use '../../static/styles/partials/variables/fonts' as *;
+@use '../../static/styles/partials/variables/palette' as *;
+@use '../../static/styles/partials/mixins' as *;
+
+
+.image-demo {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  left: 10%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 80%;
+  &__image-border {
+    width: 100%;
+    background: #fff;
+    margin: 1rem 0;
+    padding: 1rem;
+    transform: rotate(-2deg);
+    border-radius: 4px;
+    box-shadow: 0 0 6px 0 #666;
+    @include desktop {
+      width: 30%;
+      margin: 1rem 2rem;
+    }
+  }
+  &__image {
+    width: 100%;
+  }
+  &__sample-code {
+    order: -1;
+    margin-top: 1rem;
+    width: 100%;
+    @include desktop {
+      order: 0;
+      width: 60%;
+    }
+    & p {
+      font: 2rem $serif;
+      color: #fff;
+      margin: 0;
+      word-break: break-word;
+    }
+  }
+  &__alt-tag {
+    position: relative;
+    display: inline-block;
+    left: 4rem;
+    width: calc(100% - 4rem);
+    top: 0.25rem;
+    padding: 0.25rem;
+    animation: fadeInBG 1s forwards;
+    border-radius: 4px;
+  }
+  &__h2 {
+    font: 2.5rem $serif;
+    font-weight: 600;
+    color: #fff;
+    margin: 2rem 0;
+  }
+  &__content {
+    width: 100%;
+    margin: 0;
+    font: 1.25rem $serif;
+    color: #fff;
+  }
+  &__input {
+    width: 100%;
+    font: 1.75rem $serif;
+    padding: 0.25rem 0.75rem;
+    border: none;
+    border-bottom: 6px $color5 solid;
+    border-radius: 6px 6px 0 0;
+    margin: 1rem 0 1rem 0;
+    @include desktop {
+      width: calc(80% - 1rem);
+      margin: 1rem 1rem 1rem 0;
+    }
+  }
+  &__button {
+    color: #fff;
+    background: $color5;
+    font: 1.75rem $serif;
+    align-self: stretch;
+    padding: 0 1rem;
+    border: none;
+    border-radius: 6px;
+    margin: 0 0 1rem 0;
+    @include desktop {
+      width: calc(20% - 1rem);
+      margin: 1rem 0 1rem 1rem;
+    }
+    cursor: pointer;
+  }
+}
+
+.caret {
+  display: inline-block;
+  width: 0.75rem;
+  height: 3px;
+  background: #fff;
+  animation: caretPulse 1s infinite;
+}

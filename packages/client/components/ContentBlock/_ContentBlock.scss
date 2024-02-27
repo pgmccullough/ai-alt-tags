@@ -1,0 +1,17 @@
+@use '../../static/styles/partials/variables/fonts' as *;
+@use '../../static/styles/partials/variables/palette' as *;
+
+.content-block {
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 0 6px 0 #666 inset;
+  min-height: 10rem;
+  padding-bottom: 2rem;
+  &__h2 {
+    position: relative;
+    font: 2rem $serif;
+    color: $color1;
+    padding-top: 1rem;
+    text-align: center;
+  }
+}

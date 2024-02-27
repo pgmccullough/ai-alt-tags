@@ -1,0 +1,16 @@
+@use '../../static/styles/partials/variables/fonts' as *;
+@use '../../static/styles/partials/variables/palette' as *;
+
+.content-block-b {
+  width: 100%;
+  min-height: 10rem;
+  padding-bottom: 2rem;
+  &__h2 {
+    position: relative;
+    font: 2rem $serif;
+    color: $color5;
+    font-weight: 600;
+    padding-top: 1rem;
+    text-align: center;
+  }
+}

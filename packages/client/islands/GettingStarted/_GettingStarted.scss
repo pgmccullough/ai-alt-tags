@@ -1,0 +1,77 @@
+@use '../../static/styles/partials/variables/fonts' as *;
+@use '../../static/styles/partials/variables/palette' as *;
+@use '../../static/styles/partials/mixins' as *;
+
+.getting-started {
+  display: flex;
+  @include desktop {
+    flex-wrap: wrap;
+  }
+  &__tab-container {
+    display: flex;
+    width: 25%;
+    flex-direction: column;
+    justify-content: center;
+    @include desktop {
+      width: 100%;
+      flex-direction: row;
+    }
+  }
+  &__tab {
+    font: 1rem $serif;
+    padding: 0.25rem 1rem;
+    border-bottom: 3px transparent solid;
+    cursor: pointer;
+    @include desktop {
+      border-radius: 3px 3px 0 0;
+    }
+    &:not(.getting-started__tab--active):hover {
+      border-bottom-color: $color3;
+      box-shadow: 0 0 6px 0 #999;
+    }
+    &--active {
+      @extend .getting-started__tab;
+      border-bottom-color: $color2;
+      box-shadow: 0 0 6px 0 #666;
+    }
+  }
+  &__code-block {
+    display: flex;
+    position: relative;
+    width: 70%;
+    min-height: 3rem;
+    background: #444;
+    border-radius: 8px;
+    color: #fff;
+    padding: 1rem;
+    font: 1rem $serif;
+    @include desktop {
+      left: 15%;
+      width: 70%;
+    }
+    &::before {
+      content: ">";
+      color: #fff;
+      margin-right: 1rem;
+    }
+  }
+}
+
+code {
+  color: #fff;
+  &-yellow {
+    color: #ffde5d;
+  }
+  &-pink {
+    color: #f179d2;
+  }
+  &-light-blue {
+    color: #35f1ee;
+  }
+  &-dark-blue {
+    color: #179fff;
+  }
+  &-orange {
+    color: #fd893a;
+  }
+}

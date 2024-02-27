@@ -1,0 +1,40 @@
+@use './variables/palette' as *;
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@keyframes fadeInBG {
+	0% {
+		background-color: transparent;
+	}
+	100% {
+		background-color: $color5;
+	}
+}
+
+@keyframes caretPulse {
+  0% {
+    opacity: 1;
+  }
+  23% {
+    opacity: 1;
+  }
+  24% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 0;
+  }
+  91% {
+    opacity: 1;
+  }
+}
