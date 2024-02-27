@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./packages/api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - fresh-stack
+    depends_on:
+      - cassandra
+  frontend:
+    build:
+      context: ./packages/client
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - fresh-stack
+  cassandra:
+    image: cassandra:latest
+    ports:
+      - "9042:9042"
+    networks:
+      - fresh-stack
+
+networks:
+  fresh-stack:

@@ -1,0 +1,1 @@
+# AI Alt Tags | Effortless Accessibility
