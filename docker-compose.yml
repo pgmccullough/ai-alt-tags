@@ -9,7 +9,7 @@ services:
     networks:
       - fresh-stack
     depends_on:
-      - cassandra
+      - mongo
   frontend:
     build:
       context: ./packages/client
@@ -18,12 +18,21 @@ services:
       - "8000:8000"
     networks:
       - fresh-stack
-  cassandra:
-    image: cassandra:latest
+  mongo:
+    image: mongo:latest
+    container_name: mongo
     ports:
-      - "9042:9042"
-    networks:
-      - fresh-stack
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+  mongoClientTemp:
+    image: mongo:latest
+    container_name: mongoClientTemp
+    links:
+      - mongo:mongo
+    command: mongo --host mongo --eval  "db.getSiblingDB('dashboard').createUser({user:'db', pwd:'dbpass', roles:[{role:'readWrite',db:'dashboard'}]});"
+    depends_on:
+      - mongo
 
 networks:
   fresh-stack:
