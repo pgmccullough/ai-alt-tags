@@ -2,7 +2,7 @@ import { Application, Context, Router } from "https://deno.land/x/oak/mod.ts";
 import { openAIReq, scanImage } from "./controllers/index.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import { config } from 'https://deno.land/x/dotenv/mod.ts';
-import { createUser, deleteAllUsers, deleteUser, getAllUsers } from "./controllers/index.ts";
+import { checkUser, createUser, deleteAllUsers, deleteUser, getAllUsers } from "./controllers/index.ts";
 config({export: true});
 
 const router = new Router();
@@ -40,7 +40,8 @@ router.post("/users/create", async (context: Context) => {
     if(!password) missingFields.push("password");
     return context.response.body = `missing fields: ${missingFields}`;
   }
-  // CHECK USER DOESN'T EXIST WITH THIS EMAIL
+  const userExists = await checkUser({ email });
+  if(userExists) return context.response.body = {"message": `${email} already in use`};
   const res = await createUser({name, email, password});
   context.response.body = JSON.stringify(res);
 })

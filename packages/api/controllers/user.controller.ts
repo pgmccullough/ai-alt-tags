@@ -9,6 +9,14 @@ const getAllUsers = async () => {
   return users;
 }
 
+const checkUser = async({ email } :
+{ email: string }
+) => {
+  const { User } = await main();
+  const userExists = await User.find({ email }).toArray();
+  return (!!userExists.length);
+}
+
 const createUser = async ({ name, email, password } : 
   {name: string, email: string, password: string}
 ) => {
@@ -47,4 +55,4 @@ const deleteUser = async ({ _id }: {_id: string}) => {
   }
 }
 
-export { createUser, deleteAllUsers, deleteUser, getAllUsers };
+export { checkUser, createUser, deleteAllUsers, deleteUser, getAllUsers };

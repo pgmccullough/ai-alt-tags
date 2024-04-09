@@ -1,8 +1,15 @@
 import { openAIReq } from "./openAIReq.ts";
 import { scanImage } from "./scanImage.ts";
-import { createUser, deleteAllUsers, deleteUser, getAllUsers } from "./user.controller.ts";
+import { 
+  checkUser, 
+  createUser, 
+  deleteAllUsers, 
+  deleteUser, 
+  getAllUsers 
+} from "./user.controller.ts";
 
-export { 
+export {
+  checkUser,
   createUser, 
   deleteAllUsers, 
   deleteUser, 
