@@ -1,4 +1,6 @@
+import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
 import { main, client } from '../models/user.model.ts';
+import { ObjectId } from '../utils/deps.ts';
 
 const getAllUsers = async () => {
   const { User } = await main();
@@ -7,22 +9,24 @@ const getAllUsers = async () => {
   return users;
 }
 
-const makeDummyUser = async () => {
+const createUser = async ({ name, email, password } : 
+  {name: string, email: string, password: string}
+) => {
+  const hash = await bcrypt.hash(password);
   const { User } = await main();
-  await User.insertOne({
-    name: "Patrick McCullough",
-    email: "patrick.g.mccullough@gmail.com",
-    role: "admin",
-    verified: true,
-    apiKey: "g",
-    password: "dog",
+  const { insertedId } = await User.insertOne({
+    name,
+    email,
+    role: "subscriber",
+    verified: false,
+    apiKey: crypto.randomUUID(),
+    password: hash,
     createdAt: new Date(),
     updatedAt: new Date()
   })
-  const users = await User.find({}).toArray();
-  await User.deleteMany({});
+  const newUser = await User.findOne({_id: new ObjectId(insertedId)});
   client.close();
-  return users;
+  return newUser;
 }
 
-export { getAllUsers, makeDummyUser };
+export { getAllUsers, createUser };

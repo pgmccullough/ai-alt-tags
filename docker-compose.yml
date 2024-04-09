@@ -5,7 +5,7 @@ services:
       context: ./packages/api
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - 8080:8080
     networks:
       - fresh-stack
     depends_on:
@@ -22,17 +22,11 @@ services:
     image: mongo:latest
     container_name: mongo
     ports:
-      - "27017:27017"
+      - 27017:27017
     volumes:
       - ./data:/data/db
-  mongoClientTemp:
-    image: mongo:latest
-    container_name: mongoClientTemp
-    links:
-      - mongo:mongo
-    command: mongo --host mongo --eval  "db.getSiblingDB('ai_alt_tags').createUser({user:'root', pwd:'rootroot', roles:[{role:'readWrite',db:'ai_alt_tags'}]});"
-    depends_on:
-      - mongo
+    networks:
+      - fresh-stack
 
 networks:
   fresh-stack:

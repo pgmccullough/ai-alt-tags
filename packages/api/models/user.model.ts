@@ -5,7 +5,7 @@ interface UserSchema {
   _id?: ObjectId;
   name: string;
   email: string;
-  role: string;
+  role: "subscriber" | "admin";
   verified: boolean;
   apiKey: string,
   password: string;
