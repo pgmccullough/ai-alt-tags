@@ -5,7 +5,8 @@ import {
   createUser, 
   deleteAllUsers, 
   deleteUser, 
-  getAllUsers 
+  getAllUsers,
+  login 
 } from "./user.controller.ts";
 
 export {
@@ -14,6 +15,7 @@ export {
   deleteAllUsers, 
   deleteUser, 
   getAllUsers, 
+  login,
   openAIReq, 
   scanImage 
 };

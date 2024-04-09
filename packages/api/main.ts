@@ -2,7 +2,7 @@ import { Application, Context, Router } from "https://deno.land/x/oak/mod.ts";
 import { openAIReq, scanImage } from "./controllers/index.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import { config } from 'https://deno.land/x/dotenv/mod.ts';
-import { checkUser, createUser, deleteAllUsers, deleteUser, getAllUsers } from "./controllers/index.ts";
+import { checkUser, createUser, deleteAllUsers, deleteUser, getAllUsers, login } from "./controllers/index.ts";
 config({export: true});
 
 const router = new Router();
@@ -27,8 +27,23 @@ router.delete("/users/:_id", async (context: Context) => {
   return context.response.body = await deleteUser({ _id: context.params._id }); 
 });
 
-router.get("/users", async (context: Context) => {   
-  return context.response.body = await getAllUsers();
+router.get("/users", async (context: Context) => {
+  const userArray = await getAllUsers();
+  return context.response.body = {count: userArray.length, users: userArray };
+});
+
+router.post("/users/login", async (context: Context) => {   
+  const { email, password } = await context.request.body().value;  
+  if(!email || !password) {
+    const missingFields: Array<string> = [];
+    if(!email) missingFields.push("email");
+    if(!password) missingFields.push("password");
+    return context.response.body = `missing fields: ${missingFields}`;
+  }
+  const userExists = await checkUser({ email });
+  if(!userExists) return context.response.body = `No user with email ${email}`;
+  const loginResponse = await login({ email, password });
+  return context.response.body = loginResponse;
 });
 
 router.post("/users/create", async (context: Context) => {   

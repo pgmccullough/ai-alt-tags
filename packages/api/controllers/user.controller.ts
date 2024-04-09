@@ -55,4 +55,19 @@ const deleteUser = async ({ _id }: {_id: string}) => {
   }
 }
 
-export { checkUser, createUser, deleteAllUsers, deleteUser, getAllUsers };
+const login = async ( { email, password } : { email: string, password: string } ) => {
+  const { User } = await main();
+  const match = await User.find({ email }).toArray();
+  const hash = match[0].password;
+  const pwResult = await bcrypt.compare(password, hash);
+
+  return pwResult;
+}
+
+export { checkUser, 
+  createUser, 
+  deleteAllUsers, 
+  deleteUser, 
+  getAllUsers,
+  login
+};
