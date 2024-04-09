@@ -1,4 +1,5 @@
 import { openAIReq } from "./openAIReq.ts";
 import { scanImage } from "./scanImage.ts";
+import { getAllUsers, makeDummyUser } from "./user.controller.ts";
 
-export { openAIReq, scanImage }
+export { getAllUsers, makeDummyUser, openAIReq, scanImage };
