@@ -4,7 +4,7 @@ import { ObjectId } from '../utils/deps.ts';
 
 const getAllUsers = async () => {
   const { User } = await main();
-  const users = await User.find();
+  const users = await User.find().toArray();
   client.close();
   return users;
 }
@@ -29,4 +29,22 @@ const createUser = async ({ name, email, password } :
   return newUser;
 }
 
-export { getAllUsers, createUser };
+const deleteAllUsers = async () => {
+  const { User } = await main();
+  await User.deleteMany({});
+  return {};
+}
+
+const deleteUser = async ({ _id }: {_id: string}) => {
+  const { User } = await main();
+  const match = await User.find({ _id: new ObjectId(_id)}).toArray();
+  if(!match.length) return { message: `No user with id ${_id}`};
+  try {
+    await User.deleteOne({ _id: new ObjectId(_id)});
+    return { deleted: _id };
+  } catch(_err) {
+    return { message: `Unknown error`};
+  }
+}
+
+export { createUser, deleteAllUsers, deleteUser, getAllUsers };

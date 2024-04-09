@@ -2,7 +2,7 @@ import { Application, Context, Router } from "https://deno.land/x/oak/mod.ts";
 import { openAIReq, scanImage } from "./controllers/index.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import { config } from 'https://deno.land/x/dotenv/mod.ts';
-import { getAllUsers, createUser } from "./controllers/index.ts";
+import { createUser, deleteAllUsers, deleteUser, getAllUsers } from "./controllers/index.ts";
 config({export: true});
 
 const router = new Router();
@@ -19,7 +19,19 @@ router.get("/", async (context: Context) => {
   context.response.body = JSON.stringify("Backend Docs");
 })
 
-router.post("/user", async (context: Context) => {   
+router.delete("/users", async (context: Context) => {   
+  return context.response.body = await deleteAllUsers();
+});
+
+router.delete("/users/:_id", async (context: Context) => {   
+  return context.response.body = await deleteUser({ _id: context.params._id }); 
+});
+
+router.get("/users", async (context: Context) => {   
+  return context.response.body = await getAllUsers();
+});
+
+router.post("/users/create", async (context: Context) => {   
   const { name, email, password } = await context.request.body().value;
   if(!name || !email || !password) {
     const missingFields: Array<string> = [];
