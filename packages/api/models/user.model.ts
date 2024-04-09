@@ -1,4 +1,3 @@
-// import { db } from '../utils/connectDB.ts';
 import { client } from '../utils/connectDB.ts';
 import { ObjectId } from '../utils/deps.ts';
 
@@ -8,6 +7,7 @@ interface UserSchema {
   email: string;
   role: string;
   verified: boolean;
+  apiKey: string,
   password: string;
   createdAt: Date;
   updatedAt: Date;

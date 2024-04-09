@@ -14,6 +14,7 @@ const makeDummyUser = async () => {
     email: "patrick.g.mccullough@gmail.com",
     role: "admin",
     verified: true,
+    apiKey: "g",
     password: "dog",
     createdAt: new Date(),
     updatedAt: new Date()

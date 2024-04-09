@@ -6,4 +6,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["run", "--watch", "--allow-net", "--allow-read", "--allow-env", "main.ts"]
+CMD ["run", "--watch", "--allow-net", "--allow-read", "--allow-env", "--allow-sys", "main.ts"]
