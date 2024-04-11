@@ -1,13 +1,13 @@
-import { Application, Context, Router } from "https://deno.land/x/oak/mod.ts";
+import { Application, Router, RouterContext } from "https://deno.land/x/oak/mod.ts";
 import { openAIReq, scanImage } from "./controllers/index.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import { config } from 'https://deno.land/x/dotenv/mod.ts';
-import { checkUser, createUser, deleteAllUsers, deleteUser, getAllUsers, login } from "./controllers/index.ts";
+import { userRoutes } from "./routes/user.route.ts";
 config({export: true});
 
 const router = new Router();
 
-const verify = async (context: Context, next: () => Promise<unknown>) => {
+const verify = async (context: RouterContext<string>, next: () => Promise<unknown>) => {
   const headers: Headers = context.request.headers;
   if(headers.get("origin")==="https://ai-alt-tags.com") return await next();
   if(headers.get("origin")==="http://localhost:8000") return await next();
@@ -15,54 +15,12 @@ const verify = async (context: Context, next: () => Promise<unknown>) => {
   await next();
 }
 
-router.get("/", async (context: Context) => {   
-  context.response.body = JSON.stringify("Backend Docs");
-})
-
-router.delete("/users", async (context: Context) => {   
-  return context.response.body = await deleteAllUsers();
-});
-
-router.delete("/users/:_id", async (context: Context) => {   
-  return context.response.body = await deleteUser({ _id: context.params._id }); 
-});
-
-router.get("/users", async (context: Context) => {
-  const userArray = await getAllUsers();
-  return context.response.body = {count: userArray.length, users: userArray };
-});
-
-router.post("/users/login", async (context: Context) => {   
-  const { email, password } = await context.request.body().value;  
-  if(!email || !password) {
-    const missingFields: Array<string> = [];
-    if(!email) missingFields.push("email");
-    if(!password) missingFields.push("password");
-    return context.response.body = `missing fields: ${missingFields}`;
-  }
-  const userExists = await checkUser({ email });
-  if(!userExists) return context.response.body = `No user with email ${email}`;
-  const loginResponse = await login({ email, password });
-  return context.response.body = loginResponse;
-});
-
-router.post("/users/create", async (context: Context) => {   
-  const { name, email, password } = await context.request.body().value;
-  if(!name || !email || !password) {
-    const missingFields: Array<string> = [];
-    if(!name) missingFields.push("name");
-    if(!email) missingFields.push("email");
-    if(!password) missingFields.push("password");
-    return context.response.body = `missing fields: ${missingFields}`;
-  }
-  const userExists = await checkUser({ email });
-  if(userExists) return context.response.body = {"message": `${email} already in use`};
-  const res = await createUser({name, email, password});
-  context.response.body = JSON.stringify(res);
-})
-
 router
-  .post("/", verify, async (context: Context) => {    
+  .get("/", async (context: RouterContext<string>) => {   
+    console.log(context.cookies.get("token"));
+    context.response.body = JSON.stringify("Backend Docs");
+  })
+  .post("/", verify, async (context: RouterContext<string>) => {    
     const { request: req } = context;
     const { imgUrl } = await req.body().value;
     if(!imgUrl) return context.response.status = 400;
@@ -72,8 +30,13 @@ router
   })
 
 const app = new Application();
+
 app.use(oakCors());
+
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+app.use(userRoutes.routes());
+app.use(userRoutes.allowedMethods());
 
 await app.listen({ port: 8080 });

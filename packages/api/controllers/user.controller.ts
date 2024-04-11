@@ -1,6 +1,7 @@
 import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
 import { main, client } from '../models/user.model.ts';
 import { ObjectId } from '../utils/deps.ts';
+import { create, verify } from "https://deno.land/x/djwt@v3.0.2/mod.ts";
 
 const getAllUsers = async () => {
   const { User } = await main();
@@ -60,11 +61,27 @@ const login = async ( { email, password } : { email: string, password: string } 
   const match = await User.find({ email }).toArray();
   const hash = match[0].password;
   const pwResult = await bcrypt.compare(password, hash);
-
   return pwResult;
 }
 
-export { checkUser, 
+const key = await crypto.subtle.generateKey(
+  { name: "HMAC", hash: "SHA-512" },
+  true,
+  ["sign", "verify"],
+);
+
+const createJwt = async (email: string) => {
+  const jwt = await create(
+    { alg: "HS512", typ: "JWT" },
+    { email },
+    key
+  )
+  return jwt;
+}
+
+export { 
+  checkUser, 
+  createJwt,
   createUser, 
   deleteAllUsers, 
   deleteUser, 

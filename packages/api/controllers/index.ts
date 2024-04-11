@@ -2,6 +2,7 @@ import { openAIReq } from "./openAIReq.ts";
 import { scanImage } from "./scanImage.ts";
 import { 
   checkUser, 
+  createJwt,
   createUser, 
   deleteAllUsers, 
   deleteUser, 
@@ -11,6 +12,7 @@ import {
 
 export {
   checkUser,
+  createJwt,
   createUser, 
   deleteAllUsers, 
   deleteUser, 
