@@ -7,6 +7,7 @@ export const Header = (props: JSX.HTMLAttributes<HTMLElement>) => {
       class="header"
     >
       <h1>AI Alt Tags</h1>
+      <a href="signup">Sign up</a>
     </header>
   );
 }
