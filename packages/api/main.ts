@@ -19,7 +19,10 @@ const verify = async (context: RouterContext<string>, next: () => Promise<unknow
   if(validApiKey) return await next();
   if(headers.get("origin")==="https://ai-alt-tags.com") return await next();
   if(headers.get("origin")==="http://localhost:8000") return await next();
-  if(!headers.get('AI-Alt-API-Key')||(Deno.env.get("TEMP_UUID")!==headers.get('AI-Alt-API-Key'))) return context.response.status = 401;
+  if(!headers.get('AI-Alt-API-Key')||(Deno.env.get("TEMP_UUID")!==headers.get('AI-Alt-API-Key'))) {
+    context.response.status = 401;
+    return context.response.body = "Requests must be accompanied by a valid api key."
+  }
   await next();
 }
 
