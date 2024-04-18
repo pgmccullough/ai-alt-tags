@@ -1,5 +1,5 @@
 import { Application, Router, RouterContext } from "https://deno.land/x/oak/mod.ts";
-import { openAIReq, scanImage } from "./controllers/index.ts";
+import { checkApi, openAIReq, scanImage, verifyJwt } from "./controllers/index.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import { config } from 'https://deno.land/x/dotenv/mod.ts';
 import { userRoutes } from "./routes/user.route.ts";
@@ -9,6 +9,14 @@ const router = new Router();
 
 const verify = async (context: RouterContext<string>, next: () => Promise<unknown>) => {
   const headers: Headers = context.request.headers;
+  const { pathname } = context.request.url;
+  const apiKey = context.request.url.searchParams.get('api_key');
+  const validApiKey = await checkApi(apiKey);
+  const unprotectedRoutes = ['/users/login', '/users/create'];
+  if(unprotectedRoutes.includes(pathname)) return await next();
+  context.state.user = await verifyJwt(context);
+  if(context.state.user) return await next();
+  if(validApiKey) return await next();
   if(headers.get("origin")==="https://ai-alt-tags.com") return await next();
   if(headers.get("origin")==="http://localhost:8000") return await next();
   if(!headers.get('AI-Alt-API-Key')||(Deno.env.get("TEMP_UUID")!==headers.get('AI-Alt-API-Key'))) return context.response.status = 401;
@@ -17,7 +25,6 @@ const verify = async (context: RouterContext<string>, next: () => Promise<unknow
 
 router
   .get("/", async (context: RouterContext<string>) => {   
-    console.log(context.cookies.get("token"));
     context.response.body = JSON.stringify("Backend Docs");
   })
   .post("/", verify, async (context: RouterContext<string>) => {    
@@ -32,7 +39,7 @@ router
 const app = new Application();
 
 app.use(oakCors());
-
+app.use(verify);
 app.use(router.routes());
 app.use(router.allowedMethods());
 

@@ -52,7 +52,10 @@ router.post("/users/create", async (context: RouterContext<string>) => {
     return context.response.body = `missing fields: ${missingFields}`;
   }
   const userExists = await checkUser({ email });
-  if(userExists) return context.response.body = {"message": `${email} already in use`};
+  if(userExists) {
+    context.response.status = 409;
+    return context.response.body = {"message": `${email} already in use`};
+  }
   const res = await createUser({name, email, password});
   context.response.body = JSON.stringify(res);
 })

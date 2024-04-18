@@ -1,3 +1,4 @@
+import { RouterContext } from "https://deno.land/x/oak/mod.ts";
 import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
 import { main, client } from '../models/user.model.ts';
 import { ObjectId } from '../utils/deps.ts';
@@ -58,10 +59,14 @@ const deleteUser = async ({ _id }: {_id: string}) => {
 
 const login = async ( { email, password } : { email: string, password: string } ) => {
   const { User } = await main();
-  const match = await User.find({ email }).toArray();
-  const hash = match[0].password;
+  const [ match ] = await User.find({ email }).toArray();
+  const hash = match.password;
   const pwResult = await bcrypt.compare(password, hash);
-  return pwResult;
+  return { pwResult, user: { 
+    email: match.email, 
+    apiKey: match.apiKey,
+    roler: match.role
+  }};
 }
 
 const key = await crypto.subtle.generateKey(
@@ -79,12 +84,30 @@ const createJwt = async (email: string) => {
   return jwt;
 }
 
+const verifyJwt = async ( ctx: RouterContext<string> ) => {
+  try {
+    const payload = await verify(await ctx.cookies.get('token'), key);
+    return payload;
+  } catch(err) {
+    await ctx.cookies.delete('token');
+    return null;
+  }
+}
+
+const checkApi = async (apiKey: string) => {
+  const { User } = await main();
+  const [ match ] = await User.find({ apiKey }).toArray();
+  return match;
+}
+
 export { 
+  checkApi,
   checkUser, 
   createJwt,
   createUser, 
   deleteAllUsers, 
   deleteUser, 
   getAllUsers,
-  login
+  login,
+  verifyJwt
 };
