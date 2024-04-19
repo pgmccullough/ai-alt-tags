@@ -95,6 +95,19 @@ body {
   margin: 0;
 }
 
+.button {
+  font: 1.25rem Inconsolata, Garamond, "Times New Roman", Times, serif;
+  margin-right: 1.25rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px #fff solid;
+  box-shadow: 0 0 6px 0 #000;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.button:hover {
+  box-shadow: inset 0 0 6px 0 #000;
+}
+
 .header {
   position: relative;
   display: flex;
@@ -108,7 +121,7 @@ body {
   opacity: 0.6;
   box-shadow: 0 0 6px 0 #000;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 .header h1 {
   text-shadow: -1px 0px #fff;

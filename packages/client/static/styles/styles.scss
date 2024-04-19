@@ -1,4 +1,5 @@
 @use './partials/globals' as *;
+@use '../../components/Button/Button';
 @use '../../components/Header/Header';
 @use '../../components/ContentBlock/ContentBlock';
 @use '../../components/ContentBlockB/ContentBlockB';

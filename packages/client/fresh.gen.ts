@@ -6,6 +6,7 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_environment from "./routes/api/environment.ts";
 import * as $index from "./routes/index.tsx";
+import * as $partials_signup from "./routes/partials/signup.tsx";
 import * as $signup from "./routes/signup.tsx";
 import * as $GettingStarted_GettingStarted from "./islands/GettingStarted/GettingStarted.tsx";
 import * as $ImageDemo_ImageDemo from "./islands/ImageDemo/ImageDemo.tsx";
@@ -17,6 +18,7 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/api/environment.ts": $api_environment,
     "./routes/index.tsx": $index,
+    "./routes/partials/signup.tsx": $partials_signup,
     "./routes/signup.tsx": $signup,
   },
   islands: {
