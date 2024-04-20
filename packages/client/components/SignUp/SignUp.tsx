@@ -20,19 +20,21 @@ export const SignUp = () => {
           placeholder="Email"
           validation={"email"}
         />
-        <input 
-          type="password"
-          class="signup__input"
+        <Input
+          className="signup__input"
           name="password"
           value=""
           placeholder="Password"
-        />
-        <input 
+          validation={"password"}
           type="password"
-          class="signup__input"
-          name="passwordConfirm"
+        />
+        <Input
+          className="signup__input"
+          name="passwordconfirm"
           value=""
-          placeholder="Password (confirm)"
+          placeholder="Password (Confirm)"
+          validation={"password"}
+          type="password"
         />
         <button class="signup__button">SIGN UP</button>
       </form>

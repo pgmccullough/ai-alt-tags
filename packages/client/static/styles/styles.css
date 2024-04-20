@@ -153,7 +153,7 @@ body {
 }
 .signup__message {
   font: 0.9rem Inconsolata, Garamond, "Times New Roman", Times, serif;
-  position: absolute;
+  position: relative;
   margin-top: -0.7rem;
 }
 .signup__message--error {

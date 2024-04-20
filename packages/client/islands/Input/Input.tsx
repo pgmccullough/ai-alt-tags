@@ -4,6 +4,7 @@ export const Input = ({
     validation,
     className, 
     name, 
+    type,
     value, 
     placeholder,
 }) => {
@@ -17,6 +18,13 @@ export const Input = ({
         const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         isError.value = !emailReg.test(value);
         isGood.value = emailReg.test(value);
+    }
+    
+    const passwordCheck = (e) => {
+        const { value } = e.target;
+        const pwReg = /^(?=.*[a-zA-Z0-9!@#$%^&*()_+={}\[\]:;"'<>,.?\/\\\-]).{8,}$/;
+        isError.value = !pwReg.test(value);
+        isGood.value = pwReg.test(value);
     }
 
     const notEmpty = (e) => {
@@ -34,6 +42,12 @@ export const Input = ({
                 err: "Please enter a valid email address"
             };
             break;
+        case("password"):
+            validationFn = {
+                fn: passwordCheck, 
+                err: "Password must be at least 8 characters long, and include at least one letter, number, and special character"
+            };
+            break;
         default: 
             validationFn = {
                 fn: notEmpty, 
@@ -49,9 +63,10 @@ export const Input = ({
                     ${isError.value && `${className}--error`}
                     ${isGood.value && `${className}--good`}
                 `}
+                type={type || "text"}
                 name="name"
                 value={inputVal.value}
-                placeholder="Name"
+                placeholder={placeholder}
                 onChange={e => {inputVal.value = e.target.value;}}
                 onFocus={() => {isError.value = false;}}
                 onBlur={validationFn?.fn}
