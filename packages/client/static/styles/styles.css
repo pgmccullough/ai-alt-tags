@@ -129,6 +129,9 @@ body {
   font-weight: 600;
   margin: 0;
 }
+.signup__h3 {
+  margin: 0;
+}
 .signup__pitch {
   font: 1.25rem Inconsolata, Garamond, "Times New Roman", Times, serif;
   color: #fff;
@@ -173,6 +176,11 @@ body {
   margin: 1rem 0 1rem 0;
   padding: 0.25rem 0.5rem;
   cursor: pointer;
+  transition: 0.5s;
+}
+.signup__button:disabled {
+  opacity: 0.75;
+  filter: saturate(0.25);
 }
 
 .input-container {

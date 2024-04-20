@@ -10,7 +10,6 @@ import * as $partials_signup from "./routes/partials/signup.tsx";
 import * as $signup from "./routes/signup.tsx";
 import * as $GettingStarted_GettingStarted from "./islands/GettingStarted/GettingStarted.tsx";
 import * as $ImageDemo_ImageDemo from "./islands/ImageDemo/ImageDemo.tsx";
-import * as $Input_Input from "./islands/Input/Input.tsx";
 import * as $SignUpForm_SignUpForm from "./islands/SignUpForm/SignUpForm.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
@@ -27,7 +26,6 @@ const manifest = {
     "./islands/GettingStarted/GettingStarted.tsx":
       $GettingStarted_GettingStarted,
     "./islands/ImageDemo/ImageDemo.tsx": $ImageDemo_ImageDemo,
-    "./islands/Input/Input.tsx": $Input_Input,
     "./islands/SignUpForm/SignUpForm.tsx": $SignUpForm_SignUpForm,
   },
   baseUrl: import.meta.url,

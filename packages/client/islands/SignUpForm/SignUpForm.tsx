@@ -48,17 +48,31 @@ export const SignUpForm = () => {
         err: `Complete field.`
     }
 
+    const confirmPassword = {
+        fn: (e) => {
+            const { value } = e.target;
+            setSignal(e.target.name, 'isGood', ((value === formData.value.password.val) && (formData.value.password.isGood)));
+            setSignal(e.target.name, 'isError', ((value !== formData.value.password.val) || (formData.value.password.isError)));
+        },
+        err: `Passwords must match.`
+    }
+    
+
     const changeHandler = (e) => {
         setSignal(e.target.name, 'val', e.target.value);
     }
 
     return (
-        <form class="signup__form">
+        <form 
+            class="signup__form"
+            method="post"
+        >
             <h2 class="signup__h2">Create an Account</h2>
             {[
                 {name: "name", type: "text", validator: notEmpty},
                 {name: "email", type: "text", validator: emailCheck},
-                {name: "password", type: "text", validator: passwordCheck},
+                {name: "password", type: "password", validator: passwordCheck},
+                {name: "confirmpassword", placeholder: "password (confirm)", type: "password", validator: confirmPassword}
             ].map(inputField => 
                 <div class={`input-container ${formData.value[inputField.name].isGood && 'input-container--good'}`}>
                     <input 
@@ -70,7 +84,7 @@ export const SignUpForm = () => {
                         type={inputField.type}
                         name={inputField.name}
                         value={formData.value[inputField.name].val}
-                        placeholder={inputField.name}
+                        placeholder={inputField.placeholder || inputField.name}
                         onChange={changeHandler}
                         onFocus={() => {
                             setSignal(inputField.name, 'isGood', false);
@@ -87,37 +101,14 @@ export const SignUpForm = () => {
                     }
                 </div>
             )}
-            {/* <Input
-                formData={formData}
-                className="signup__input"
-                name="email"
-                value={formData.value.email}
-                changeHandler={changeHandler}
-                placeholder="Email"
-                validation={emailCheck}
-            />
-            <Input
-                formData={formData}
-                className="signup__input"
-                name="password"
-                value={formData.value.password}
-                changeHandler={changeHandler}
-                placeholder="Password"
-                validation={passwordCheck}
-                type="password"
-            />
-            <Input
-                formData={formData}
-                className="signup__input"
-                name="confirmpassword"
-                value={formData.value.confirmpassword}
-                changeHandler={changeHandler}
-                placeholder="Password (confirm)"
-                validation={passwordCheck}
-                type="password"
-            /> */}
             <button 
                 class="signup__button"
+                disabled={
+                    !formData.value.name.isGood
+                    || !formData.value.email.isGood
+                    || !formData.value.password.isGood
+                    || !formData.value.confirmpassword.isGood
+                }
             >
                 SIGN UP
             </button>

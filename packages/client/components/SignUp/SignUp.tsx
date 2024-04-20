@@ -6,7 +6,7 @@ export const SignUp = () => {
     <section class="signup">
       <SignUpForm />
       <div class="signup__pitch">
-        <h3>🌟 Sign Up for Instant Alt Tag Generation 🌟</h3>
+        <h3 class="signup__h3">🌟 Sign Up for Instant Alt Tag Generation 🌟</h3>
         <h4>Why sign up?</h4>
         <ul>
           <li><b>Efficiency:</b> Save time and effort by automating alt tag generation for your images.</li>
