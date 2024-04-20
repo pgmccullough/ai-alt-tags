@@ -108,6 +108,87 @@ body {
   box-shadow: inset 0 0 6px 0 #000;
 }
 
+.signup {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 3rem;
+  width: 70%;
+  left: 15%;
+}
+.signup__form {
+  background: rgb(230, 230, 230);
+  border-radius: 8px;
+  width: 40%;
+  padding: 1rem 2rem;
+}
+.signup__h2 {
+  color: #456990;
+  font: 2rem Inconsolata, Garamond, "Times New Roman", Times, serif;
+  font-weight: 600;
+  margin: 0;
+}
+.signup__pitch {
+  font: 1.25rem Inconsolata, Garamond, "Times New Roman", Times, serif;
+  color: #fff;
+  width: 55%;
+}
+.signup__input {
+  width: 100%;
+  font: 1.75rem Inconsolata, Garamond, "Times New Roman", Times, serif;
+  padding: 0.25rem 0.75rem;
+  border: none;
+  border-bottom: 6px #EEB868 solid;
+  border-radius: 6px 6px 0 0;
+  margin: 1rem 0 1rem 0;
+}
+.signup__input--error {
+  border-bottom-color: #EF767A;
+  outline-color: #EF767A;
+}
+.signup__input--good {
+  border-bottom-color: #49BEaa;
+  outline-color: #49BEaa;
+}
+.signup__message {
+  font: 0.9rem Inconsolata, Garamond, "Times New Roman", Times, serif;
+  position: absolute;
+  margin-top: -0.7rem;
+}
+.signup__message--error {
+  color: #EF767A;
+}
+.signup__message--good {
+  color: #49BEaa;
+}
+.signup__button {
+  color: #fff;
+  background: #EEB868;
+  font: 1.75rem Inconsolata, Garamond, "Times New Roman", Times, serif;
+  align-self: stretch;
+  padding: 0 1rem;
+  border: none;
+  border-radius: 6px;
+  margin: 1rem 0 1rem 0;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+.input-container {
+  position: relative;
+}
+.input-container--good::before {
+  content: "";
+  background-image: url("/assets/images/goodinput.png");
+  width: 20px;
+  height: 20px;
+  background-size: cover;
+  position: absolute;
+  top: calc(50% - 10px);
+  left: -25px;
+}
+
 .header {
   position: relative;
   display: flex;
