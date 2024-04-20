@@ -1,43 +1,10 @@
-import { Input } from "../../islands/Input/Input.tsx"
+import { SignUpForm } from "../../islands/SignUpForm/SignUpForm.tsx"
 
 export const SignUp = () => {
 
   return (
     <section class="signup">
-      <form class="signup__form">
-        <h2 class="signup__h2">Create an Account</h2>
-        <Input
-          className="signup__input"
-          name="name"
-          value=""
-          placeholder="Name"
-          validation={null}
-        />
-        <Input
-          className="signup__input"
-          name="email"
-          value=""
-          placeholder="Email"
-          validation={"email"}
-        />
-        <Input
-          className="signup__input"
-          name="password"
-          value=""
-          placeholder="Password"
-          validation={"password"}
-          type="password"
-        />
-        <Input
-          className="signup__input"
-          name="passwordconfirm"
-          value=""
-          placeholder="Password (Confirm)"
-          validation={"password"}
-          type="password"
-        />
-        <button class="signup__button">SIGN UP</button>
-      </form>
+      <SignUpForm />
       <div class="signup__pitch">
         <h3>🌟 Sign Up for Instant Alt Tag Generation 🌟</h3>
         <h4>Why sign up?</h4>
