@@ -80,7 +80,7 @@ export const SignUpForm = ({ apiUrl }) => {
           }
         )
         const data = JSON.parse(await raw.text());
-        console.log(data);
+        window.location.href = `${window.location.origin}/confirm`;
     }
 
     return (
