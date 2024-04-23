@@ -14,6 +14,10 @@
         border-radius: 8px;
         width: 40%;
         padding: 1rem 2rem;
+        transition: 0.5s;
+        &--loading {
+            filter: blur(4px);
+        }
     }
     &__h2 {
         color: $color2;
@@ -69,7 +73,7 @@
         padding: 0.25rem .5rem;
         cursor: pointer;
         transition: 0.5s;
-        &:disabled {
+        &--disabled {
             opacity: 0.75;
             filter: saturate(0.25);
         }

@@ -1,6 +1,6 @@
 import { useSignal } from "@preact/signals";
 
-export const SignUpForm = () => {
+export const SignUpForm = ({ apiUrl }) => {
 
     const formData = useSignal({
         name: {val: '', isError: false, isGood: false},
@@ -8,6 +8,8 @@ export const SignUpForm = () => {
         password: {val: '', isError: false, isGood: false},
         confirmpassword: {val: '', isError: false, isGood: false},
     });
+
+    const loadingForm = useSignal(false);
 
     const setSignal = (name: string, key: string, value: boolean | string) => {
         formData.value = {
@@ -62,10 +64,30 @@ export const SignUpForm = () => {
         setSignal(e.target.name, 'val', e.target.value);
     }
 
+    const submitForm = async(e) => {
+        e.preventDefault();
+        loadingForm.value = true;
+        const { name, email, password } = formData.value;
+        const payload = { name: name.val, email: email.val, password: password.val};
+        if(!payload.name || !payload.email || !payload.password) return;
+        const raw = await fetch(`${apiUrl}/users/create`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          }
+        )
+        const data = JSON.parse(await raw.text());
+        console.log(data);
+    }
+
     return (
         <form 
-            class="signup__form"
+            class={`signup__form ${loadingForm.value && 'signup__form--loading'}`}
             method="post"
+            onSubmit={submitForm}
         >
             <h2 class="signup__h2">Create an Account</h2>
             {[
@@ -102,13 +124,13 @@ export const SignUpForm = () => {
                 </div>
             )}
             <button 
-                class="signup__button"
-                disabled={
-                    !formData.value.name.isGood
-                    || !formData.value.email.isGood
-                    || !formData.value.password.isGood
-                    || !formData.value.confirmpassword.isGood
-                }
+                class={`signup__button ${
+                    (!formData.value.name.isGood
+                        || !formData.value.email.isGood
+                        || !formData.value.password.isGood
+                        || !formData.value.confirmpassword.isGood
+                    ) && 'signup__button--disabled'
+                }`}
             >
                 SIGN UP
             </button>

@@ -57,6 +57,8 @@ router.post("/users/create", async (context: RouterContext<string>) => {
     return context.response.body = {"message": `${email} already in use`};
   }
   const res = await createUser({name, email, password});
+  const jwt = await createJwt(email)
+  context.cookies.set("token", jwt);
   context.response.body = JSON.stringify(res);
 })
 

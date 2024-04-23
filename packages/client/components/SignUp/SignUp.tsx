@@ -1,10 +1,10 @@
 import { SignUpForm } from "../../islands/SignUpForm/SignUpForm.tsx"
 
 export const SignUp = () => {
-
+  const apiUrl = Deno.env.get('BACKEND_URI');
   return (
     <section class="signup">
-      <SignUpForm />
+      <SignUpForm apiUrl={apiUrl} />
       <div class="signup__pitch">
         <h3 class="signup__h3">🌟 Sign Up for Instant Alt Tag Generation 🌟</h3>
         <h4>Why sign up?</h4>
