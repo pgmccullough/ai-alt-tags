@@ -1,4 +1,5 @@
 import { JSX } from "preact";
+import { Button } from "../Button/Button.tsx";
 
 export const Header = (props: JSX.HTMLAttributes<HTMLElement>) => {
   return (
@@ -6,8 +7,13 @@ export const Header = (props: JSX.HTMLAttributes<HTMLElement>) => {
       {...props}
       class="header"
     >
+      <div />
       <h1>AI Alt Tags</h1>
-      <a href="signup">Sign up</a>
+      <Button
+        fpartial="/partials/signup"
+        to="/signup"
+        text="Sign up"
+      />
     </header>
   );
 }

@@ -5,10 +5,13 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_environment from "./routes/api/environment.ts";
+import * as $confirm from "./routes/confirm.tsx";
 import * as $index from "./routes/index.tsx";
+import * as $partials_signup from "./routes/partials/signup.tsx";
 import * as $signup from "./routes/signup.tsx";
 import * as $GettingStarted_GettingStarted from "./islands/GettingStarted/GettingStarted.tsx";
 import * as $ImageDemo_ImageDemo from "./islands/ImageDemo/ImageDemo.tsx";
+import * as $SignUpForm_SignUpForm from "./islands/SignUpForm/SignUpForm.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -16,13 +19,16 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/api/environment.ts": $api_environment,
+    "./routes/confirm.tsx": $confirm,
     "./routes/index.tsx": $index,
+    "./routes/partials/signup.tsx": $partials_signup,
     "./routes/signup.tsx": $signup,
   },
   islands: {
     "./islands/GettingStarted/GettingStarted.tsx":
       $GettingStarted_GettingStarted,
     "./islands/ImageDemo/ImageDemo.tsx": $ImageDemo_ImageDemo,
+    "./islands/SignUpForm/SignUpForm.tsx": $SignUpForm_SignUpForm,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

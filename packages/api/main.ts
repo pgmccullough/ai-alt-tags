@@ -18,10 +18,10 @@ const verify = async (context: RouterContext<string>, next: () => Promise<unknow
   if(context.state.user) return await next();
   if(validApiKey) return await next();
   if(headers.get("origin")==="https://ai-alt-tags.com") return await next();
-  if(headers.get("origin")==="http://localhost:8000") return await next();
+  if(headers.get("origin")?.split('').slice(0,17).join('')==="http://localhost:") return await next();
   if(!headers.get('AI-Alt-API-Key')||(Deno.env.get("TEMP_UUID")!==headers.get('AI-Alt-API-Key'))) {
     context.response.status = 401;
-    return context.response.body = "Requests must be accompanied by a valid api key."
+    return context.response.body = `${headers.get("origin")} - Requests must be accompanied by a valid api key.`;
   }
   await next();
 }
@@ -41,7 +41,13 @@ router
 
 const app = new Application();
 
-app.use(oakCors());
+app.use(oakCors({
+  credentials: true,
+  origin: [
+  'http://localhost:8000',
+  'http://localhost:8001',
+  ]
+}));
 app.use(verify);
 app.use(router.routes());
 app.use(router.allowedMethods());

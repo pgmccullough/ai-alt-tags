@@ -1,0 +1,97 @@
+@use '../../static/styles/partials/variables/fonts' as *;
+@use '../../static/styles/partials/variables/palette' as *;
+
+.signup {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 3rem;
+    width: 70%;
+    left: 15%;
+    &__form {
+        background: rgb(230, 230, 230);
+        border-radius: 8px;
+        width: 40%;
+        padding: 1rem 2rem;
+        transition: 0.5s;
+        &--loading {
+            filter: blur(4px);
+        }
+    }
+    &__h2 {
+        color: $color2;
+        font: 2rem $serif;
+        font-weight: 600;
+        margin: 0;
+    }
+    &__h3 {
+        margin: 0;
+    }
+    &__pitch {
+        font: 1.25rem $serif;
+        color: #fff;
+        width: 55%;
+    }
+    &__input {
+        width: 100%;
+        font: 1.75rem $serif;
+        padding: 0.25rem 0.75rem;
+        border: none;
+        border-bottom: 6px $color5 solid;
+        border-radius: 6px 6px 0 0;
+        margin: 1rem 0 1rem 0;
+        &--error {
+            border-bottom-color: $color1;
+            outline-color: $color1;
+        }
+        &--good {
+            border-bottom-color: $color3;
+            outline-color: $color3;
+        }
+    }
+    &__message {
+        font: 0.9rem Inconsolata, Garamond, "Times New Roman", Times, serif;
+        position: relative;
+        margin-top: -0.7rem;
+        &--error {
+            color: $color1;
+        }
+        &--good {
+            color: $color3;
+        }
+    }
+    &__button {
+        color: #fff;
+        background: $color5;
+        font: 1.75rem $serif;
+        align-self: stretch;
+        padding: 0 1rem;
+        border: none;
+        border-radius: 6px;
+        margin: 1rem 0 1rem 0;
+        padding: 0.25rem .5rem;
+        cursor: pointer;
+        transition: 0.5s;
+        &--disabled {
+            opacity: 0.75;
+            filter: saturate(0.25);
+        }
+    }
+}
+
+.input-container {
+    position: relative;
+    &--good {
+        &::before {
+            content: "";
+            background-image: url('/assets/images/goodinput.png');
+            width: 20px;
+            height: 20px;
+            background-size: cover;
+            position: absolute;
+            top: calc(50% - 10px);
+            left: -25px;
+        }
+    }
+}
